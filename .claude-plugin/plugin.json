@@ -1,0 +1,17 @@
+{
+  "name": "kraken-productivity",
+  "displayName": "Kraken Productivity",
+  "version": "1.0.0",
+  "description": "Three weekday assistants and a one-shot scheduler. Requires Calendar, Email and Drive; no skill runs without them. Daily Brief emails a 2-page PDF at 6 AM: every meeting, real conflicts, and each open ask with a named owner and a verified status. Call Prep books a private prep block before each external call at 4 AM, linking a 1-2 page briefing. Follow-Ups drafts replies in your voice at 4 PM, never sending.",
+  "author": {
+    "name": "Kraken"
+  },
+  "keywords": [
+    "productivity",
+    "daily-brief",
+    "follow-ups",
+    "call-prep",
+    "meeting-prep",
+    "scheduled-tasks"
+  ]
+}
