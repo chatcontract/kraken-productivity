@@ -1,0 +1,16 @@
+{
+  "name": "kraken-productivity-marketplace",
+  "owner": {
+    "name": "chatcontract"
+  },
+  "description": "Marketplace for the Kraken Productivity plugin: three weekday assistants (Call Prep, Daily Brief, Follow-Ups) plus a one-shot scheduler.",
+  "plugins": [
+    {
+      "name": "kraken-productivity",
+      "source": "./",
+      "displayName": "Kraken Productivity",
+      "version": "1.0.0",
+      "description": "Three weekday assistants and a one-shot scheduler. Requires Calendar, Email and Drive; no skill runs without them."
+    }
+  ]
+}
