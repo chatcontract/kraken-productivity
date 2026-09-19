@@ -1,6 +1,6 @@
 # Positioning notes — SHIPPED DEFAULT, NOT YET CUSTOMISED
 
-**Status: default. `kraken-call-prep` reads this file, sees this banner, and skips it silently.** Nothing in here is used until someone replaces the placeholders below with real content and deletes this banner.
+**Status: default. `call-prep` reads this file, sees this banner, and skips it silently.** Nothing in here is used until someone replaces the placeholders below with real content and deletes this banner.
 
 This file exists so Call Prep's reference to it resolves. Earlier versions of the plugin pointed at a file that was never bundled, which meant every run reached for something that wasn't there.
 
