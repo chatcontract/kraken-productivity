@@ -1,19 +1,19 @@
-# Kraken Productivity
+# Productivity
 
 Four skills: three that do the work every weekday, one that schedules them.
 
 ## Install and start
 
-Install the plugin, then run **`/kraken-productivity:kraken-onboarding`**. Plain English works too — "onboard me" reaches the same skill — but the namespaced command is the one to put in setup instructions, because it hits the right skill first time.
+Install the plugin, then run **`/productivity:onboarding`**. Plain English works too — "onboard me" reaches the same skill — but the namespaced command is the one to put in setup instructions, because it hits the right skill first time.
 
 Every skill is namespaced the same way:
 
 | Skill | Command |
 |---|---|
-| Onboarding — run first | `/kraken-productivity:kraken-onboarding` |
-| Call Prep | `/kraken-productivity:kraken-call-prep` |
-| Daily Brief | `/kraken-productivity:kraken-daily-brief` |
-| Follow-Ups | `/kraken-productivity:kraken-follow-ups` |
+| Onboarding — run first | `/productivity:onboarding` |
+| Call Prep | `/productivity:call-prep` |
+| Daily Brief | `/productivity:daily-brief` |
+| Follow-Ups | `/productivity:follow-ups` |
 
 **If you skip that and just run a skill, it will notice.** The first time you invoke one by hand with no task for it, that skill offers to schedule **itself** — one click, before it starts work — then does the job you asked for either way. It checks and schedules only the skill you ran; the other two are left alone until you try them. Once a task exists the check is silent and never mentioned again. So nobody ends up with a plugin that only runs when they remember to ask.
 
@@ -47,7 +47,7 @@ It also has a **single-skill mode**, used when you ask for one skill by name or 
 
 **Scope is deliberately narrow: it checks the invoked skill and schedules the invoked skill.** Someone who ran Daily Brief asked about Daily Brief; signing them up for two skills they have not tried would bury the decision they actually care about. Each skill makes its own offer if and when it gets run, and a "not now" is remembered for that skill only.
 
-A yes hands off to `kraken-onboarding` in its **single-skill mode**. **No worker skill ever writes a scheduled task itself** — only onboarding's prompts carry the version stamp and the marker that identifies a run as scheduled, so a task written anywhere else would fire, be mistaken for a manual run, and skip the weekend guard. One writer, one definition of the schedule.
+A yes hands off to `onboarding` in its **single-skill mode**. **No worker skill ever writes a scheduled task itself** — only onboarding's prompts carry the version stamp and the marker that identifies a run as scheduled, so a task written anywhere else would fire, be mistaken for a manual run, and skip the weekend guard. One writer, one definition of the schedule.
 
 **On demand, all three run any day, weekend included.** The weekend rule keeps unattended automation quiet; it never refuses a person who asks. A manual Call Prep run also picks its own target day — today if calls remain ahead of the clock, otherwise the soonest day in the next seven that has one, so asking on Friday evening preps Monday.
 
@@ -93,24 +93,24 @@ Every skill emails **only the signed-in user** — no cc, no bcc, never a meetin
 .claude-plugin/plugin.json
 references/shared-run-policy.md      ← the policy all three skills share
 references/positioning-notes.md      ← optional, org-specific (Call Prep)
-assets/kraken_pdf.py                 ← the only PDF renderer + the accuracy gate
-skills/kraken-onboarding/
-skills/kraken-daily-brief/
-skills/kraken-follow-ups/
-skills/kraken-call-prep/
+assets/pdf.py                 ← the only PDF renderer + the accuracy gate
+skills/onboarding/
+skills/daily-brief/
+skills/follow-ups/
+skills/call-prep/
 ```
 
 **`references/shared-run-policy.md` is the single source of truth** for the weekday guard, rate-limit backoff, the status taxonomy and its cross-channel verification rule, mailbox resolution, the delivery contract, the connector table, the renderer's exit codes, the universal ground rules, and the writing rules that keep every output crisp and specific. Each skill reads it first and then states only what is specific to itself. In the predecessor plugin those policies were restated in six places — each of the three skills and each of the three generated task prompts — which is how one shipped with a rule the skill had already retired.
 
 ## After a plugin update
 
-**Run `/kraken-productivity:kraken-onboarding` again.** It regenerates all three prompts, refreshes the version stamp, and overwrites the existing tasks in place — same task IDs, so your schedules, run history and stored tool approvals survive. It's safe to run as often as you like.
+**Run `/productivity:onboarding` again.** It regenerates all three prompts, refreshes the version stamp, and overwrites the existing tasks in place — same task IDs, so your schedules, run history and stored tool approvals survive. It's safe to run as often as you like.
 
 Why that matters less here than it usually would: a scheduled task stores a **copy** of its prompt, and updating the plugin does not update that copy. The prompts this plugin generates are deliberately thin — a version stamp, the skill-resolution preamble, the run parameters, a four-line safety floor, and one line handing the full run contract back to the skill. Everything substantive lives in the skill files, which *are* plugin content and so update immediately. A plugin update now reaches a live schedule on its own; re-onboarding just refreshes the stamp.
 
 ## One-time setup
 
-Onboarding creates the tasks. One setting on each is only reachable in the interface, and no tool can set it. For **Kraken Daily Brief**, **Kraken Follow-Ups** and **Kraken Call Prep** in turn:
+Onboarding creates the tasks. One setting on each is only reachable in the interface, and no tool can set it. For **Daily Brief**, **Follow-Ups** and **Call Prep** in turn:
 
 1. Go to **Scheduled** in the sidebar.
 2. Locate the skill and click **Edit**.
@@ -140,7 +140,7 @@ Call Prep is deliberately the slow one. It still batches everything in parallel,
 
 ## How the PDFs are built
 
-All PDFs render through one tested renderer, `assets/kraken_pdf.py`. Skills emit a JSON payload; the renderer owns every bit of layout — page size, margins, palette, the timeline graphic, Call Prep's two-column reading grid, item grouping, and the "Page X of Y" footer.
+All PDFs render through one tested renderer, `assets/pdf.py`. Skills emit a JSON payload; the renderer owns every bit of layout — page size, margins, palette, the timeline graphic, Call Prep's two-column reading grid, item grouping, and the "Page X of Y" footer.
 
 This replaced hand-written rendering, which shipped a real brief with a corrupt page-1 content stream: the timeline lost its dots, the "Today's meetings" heading disappeared, page 1 sat two-thirds empty with no footer, and the meeting list resumed mid-way down page 2.
 
@@ -187,11 +187,11 @@ Both documents are **1–2 page executive briefings**, and length is controlled 
 
 ## Release notes — v1.0.0
 
-First release of Kraken Productivity. It is not a first draft: the plugin descends from an internal predecessor whose rules were rewritten across roughly fourteen rounds of production incidents and client feedback, and everything below either carries that behaviour forward or fixes something found while consolidating it. Version numbering starts fresh here because the plugin, the skills and the renderer are all renamed.
+First release of Productivity. It is not a first draft: the plugin descends from an internal predecessor whose rules were rewritten across roughly fourteen rounds of production incidents and client feedback, and everything below either carries that behaviour forward or fixes something found while consolidating it. Version numbering starts fresh here because the plugin, the skills and the renderer are all renamed.
 
 ### What shipped
 
-**Three weekday skills and a scheduler.** Call Prep at 4 AM, Daily Brief at 6 AM, Follow-Ups at 4 PM, scheduled Monday to Friday, enforced both in the cron day field and independently inside each skill — while a manual invocation runs any day, because the weekend rule is about unattended automation, not about refusing someone who asks. `kraken-onboarding` creates all three in one pass and removes any task left by the predecessor so nothing double-sends.
+**Three weekday skills and a scheduler.** Call Prep at 4 AM, Daily Brief at 6 AM, Follow-Ups at 4 PM, scheduled Monday to Friday, enforced both in the cron day field and independently inside each skill — while a manual invocation runs any day, because the weekend rule is about unattended automation, not about refusing someone who asks. `onboarding` creates all three in one pass and removes any task left by the predecessor so nothing double-sends.
 
 **A Graph concurrency cap of 3.** Microsoft Graph throttles on concurrency, not only on volume, and its documented limit for Outlook resources is four concurrent requests per mailbox — so a batch of seven reads fired at once loses the overflow to HTTP 429 before any backoff policy gets a say. Every parallel batch is chunked into groups of **at most 3** Graph-backed calls: three rather than four, so there is a slot spare for the person's own Outlook client or a retry landing mid-batch. It covers the Daily Brief's seven-read batch and six-thread read, Follow-Ups' Rule 1 batch and draft creation, and Call Prep's own-domain, attendee-resolution, history-lookup and block-booking batches. Nothing else is capped — Gmail, Slack, Jira, Salesforce and web search have no such limit. The time budgets are sized for the extra round trips; **no coverage, volume or call-count cap was reduced to win the minutes back.**
 
@@ -207,7 +207,7 @@ First release of Kraken Productivity. It is not a first draft: the plugin descen
 
 **Writing discipline, with the limits checked.** Every Call Prep field has a hard word and sentence limit (attendee stake 1 sentence / 25 words; one line per attendee at 20 words; each *what you need to know* and *risk* bullet 28; each action 22; the objective 25 and the desired outcome 22). The universal half — specific over general, front-load the verb, one fact per line, a date on anything that moved, and banned lists for hedges, throat-clearing openers, corporate filler and meta-commentary — is shared §9, so the daily brief and follow-up summary get it too. A hedge is allowed only when the uncertainty is the point, and then it is a **status**, not an adverb.
 
-**An accuracy gate in the renderer, not a request in prose.** `assets/kraken_pdf.py` validates the payload in two tiers.
+**An accuracy gate in the renderer, not a request in prose.** `assets/pdf.py` validates the payload in two tiers.
 
 *Hard — exit 6, fix and re-render:* a status outside the six-word vocabulary · `Completed` with no `source` · a Daily Brief actionable item missing `action`, `owner`, `by_when` or `status` · an owner that names nobody ("you", "team", "TBD") · fewer than 4 or more than 6 discovery questions · a field well past its word limit.
 
@@ -217,9 +217,9 @@ First release of Kraken Productivity. It is not a first draft: the plugin descen
 
 **Run mode decides the weekend rule, and a direct run offers to schedule itself.** Two behaviours that only exist because an early build got them wrong:
 
-- The weekend guard originally applied "however the run started… not overridable, not even on explicit request." So typing `/kraken-call-prep` on a Friday evening produced a refusal and an explanation of the schedule. **The guard now covers scheduled runs only** — it exists to keep unattended automation quiet, not to turn down someone who asked. A manual run works any day.
+- The weekend guard originally applied "however the run started… not overridable, not even on explicit request." So typing `/call-prep` on a Friday evening produced a refusal and an explanation of the schedule. **The guard now covers scheduled runs only** — it exists to keep unattended automation quiet, not to turn down someone who asked. A manual run works any day.
 - A manual Call Prep run with nothing named preps **today**, if today still has calls ahead of the current time; otherwise it looks forward up to 7 days and preps **the next day that has an external call**, saying which — so asking on a Friday evening preps Monday. Name a meeting, an account or a day and it preps that instead, in the same single calendar call.
-- A person who never ran onboarding used to get one-off runs forever. **The first manual run of a skill with no task for it now offers to schedule that skill**, once, before starting work, and runs either way — checking and creating only the skill invoked, never all three. A yes invokes `kraken-onboarding` in single-skill mode; **no worker skill writes a task itself.** That is a correctness rule, not tidiness: only onboarding's prompts carry the version stamp and the marker that identifies a run as scheduled, and a task written without them would fire, be treated as manual, skip the weekend guard, and offer to schedule itself again.
+- A person who never ran onboarding used to get one-off runs forever. **The first manual run of a skill with no task for it now offers to schedule that skill**, once, before starting work, and runs either way — checking and creating only the skill invoked, never all three. A yes invokes `onboarding` in single-skill mode; **no worker skill writes a task itself.** That is a correctness rule, not tidiness: only onboarding's prompts carry the version stamp and the marker that identifies a run as scheduled, and a task written without them would fire, be treated as manual, skip the weekend guard, and offer to schedule itself again.
 
 **One house format, and the renderer owns the half that can drift.** Both PDFs now share a single layout system — masthead, a strip of counts or account snapshot, then a reading grid whose narrow gutter carries labels and citations and whose ~74-character column carries only substance, with hairline-ruled section headings that travel with their first item. Before this, Daily Brief set its body across the full 6.7in measure with orange headings while Call Prep used the grid and quiet ones: two visual languages from one plugin, arriving in the same inbox on the same day. Shared §11 writes the standard down — the document anatomy, the email shape each skill follows, and a table stating exactly which parts the renderer enforces and which are the skill's to hold.
 
