@@ -24,7 +24,7 @@
 | Skill | On a block |
 |---|---|
 | The three workers | Show the card, **stop. No output of any kind** (Part 6). |
-| `kraken-onboarding` | Show the card, **then carry on and create the scheduled tasks**, and say in one line that those runs will stay blocked until the missing role is connected. |
+| `onboarding` | Show the card, **then carry on and create the scheduled tasks**, and say in one line that those runs will stay blocked until the missing role is connected. |
 
 **Onboarding is not an exemption from the check — it still runs it and still shows the card.** It differs in what follows, for one reason: it produces no user-facing artefact and reads no user data, it writes only scheduled tasks, and it is the place a person lands when they are *setting the plugin up* — refusing to schedule anything until connectors exist would deadlock exactly the person trying to fix them. Its task-write is therefore permitted despite Part 6's "no writes"; nothing else about Part 6 is relaxed for it.
 
